@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { styled } from '@mui/material/styles';
 import Loading from '@/common/Loading';
-import TransferTransactionTable from '@/Transactions/components/Table/TransferTransactionTable';
+import TransferTransactionTable2 from '@/Transactions/components/Table/TransferTransactionTable2';
 import { getAddressTransactions } from '@/Transactions/store/apis';
 
 const Root = styled('div')(({ theme }) => ({
@@ -30,7 +30,7 @@ export default function TransactionsTab(props: Props) {
     await fetch();
   }, [props.address]);
   return <Root>
-    {loading ? <Loading /> : <TransferTransactionTable
+    {loading ? <Loading /> : <TransferTransactionTable2
       transactions={transactions}
       address={props.address}
     />}
