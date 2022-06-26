@@ -21,6 +21,7 @@ import { RoutedProps, withRouter } from '@/utils/withRouter';
 import CodeTable from '@/Address/components/CodeTable';
 import ResourcesTab from '@/Address/components/ResourcesTab';
 import TransactionsTab from '@/Address/components/TransactionsTab';
+import TransactionsTabNew from '@/Address/components/TransactionsTabNew';
 
 const useStyles = (theme: any) => createStyles({
   table: {
@@ -96,7 +97,7 @@ class Index extends PureComponent<IndexProps, IndexState> {
   }
 
   componentDidMount() {
-    const tabList = ["token", "transactions", "resources", "codes"];
+    const tabList = ["token", "transactions", "resources", "codes","transactionsnew"];
     const tabIndex = tabList.indexOf(this.props.params.tab);
     if (tabIndex > -1) {
       this.setState({tabSelect:tabIndex});
@@ -161,7 +162,7 @@ class Index extends PureComponent<IndexProps, IndexState> {
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
       this.setState({tabSelect:newValue});
       const { navigate } = this.props;
-      const tabList = ["token", "transactions", "resources", "codes"];
+      const tabList = ["token", "transactions", "resources", "codes","transactionsnew"];
       const tabName = tabList[newValue];
       const path = `/${getNetwork()}/address/${hash}/${tabName}`;
       navigate(path);
@@ -177,6 +178,7 @@ class Index extends PureComponent<IndexProps, IndexState> {
               <Tab label="Transactions" {...a11yProps(1)} />
               <Tab label="Resources" {...a11yProps(2)} />
               <Tab label="Codes" {...a11yProps(3)} />
+              <Tab label="TransactionsNew" {...a11yProps(4)} />
             </Tabs>
           </Box>
           <ScanTabPanel value={this.state.tabSelect} index={0}>
@@ -202,6 +204,23 @@ class Index extends PureComponent<IndexProps, IndexState> {
           </ScanTabPanel>
           <ScanTabPanel value={this.state.tabSelect} index={3}>
             <CodeTable address={hash} />
+          </ScanTabPanel>
+
+
+          <ScanTabPanel value={this.state.tabSelect} index={4}>
+            <TransactionsTabNew address={hash} />
+            <Button
+              className={this.props.classes.button}
+              color='primary'
+              variant='contained'
+              onClick={() => {
+                this.props.pushLocation(`/${getNetwork()}/address_transactions/${hash}/1`);
+              }}
+            >
+              <Typography className={this.props.classes.search} variant='body1'>
+                {t('home.viewAll')}
+              </Typography>
+            </Button>
           </ScanTabPanel>
         </Box>
       </Card>

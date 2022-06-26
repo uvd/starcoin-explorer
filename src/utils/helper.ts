@@ -36,8 +36,17 @@ export function isReceiptIdentifier(arg: string) {
 
 export function formatBalance(num: string | number) {
   const value = new BigNumber(num);
-  const convertedValue = value.div(1000000000).toFormat();
-  return convertedValue;
+  if (value.lt(1)){
+    return value.div(1000000000).toFormat();
+  }
+  return  new BigNumber(value.div(1000000000).toFixed(2)).toFormat();
+}
+
+export function shortAddress(address: String) {
+  if (address.length < 10) {
+    return address;
+  }
+  return address.substring(0, 5) + '..' + address.substring(address.length - 10, address.length - 5);
 }
 
 // formatToken
